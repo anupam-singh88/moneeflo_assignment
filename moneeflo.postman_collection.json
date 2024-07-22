@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "365b9082-22e2-4f3f-a2e6-d0adc15497ce",
+		"name": "moneeflo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29145752"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"anupam\",\r\n    \"email\":\"anupamsingh2389@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"anupamsingh2389@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quotations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZTBiN2MzM2JjNzVhZDhhMjM5NmQ0In0sImlhdCI6MTcyMTYzMzcwMywiZXhwIjoxNzIyMDY1NzAzfQ.eqhEp3kbx2KqqX0yB2wvPYGkQyJw0Kj1nyMz_w7bqQs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/quotations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"quotations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZTBiN2MzM2JjNzVhZDhhMjM5NmQ0In0sImlhdCI6MTcyMTYzMzcwMywiZXhwIjoxNzIyMDY1NzAzfQ.eqhEp3kbx2KqqX0yB2wvPYGkQyJw0Kj1nyMz_w7bqQs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"products\": [\r\n    { \"name\": \"Product1\", \"qty\": 2, \"rate\": 100 },\r\n    { \"name\": \"Product2\", \"qty\": 3, \"rate\": 200 }\r\n  ],\r\n  \"format\": \"image\" \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/products/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quotations view",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5ZTBiN2MzM2JjNzVhZDhhMjM5NmQ0In0sImlhdCI6MTcyMTYzMzcwMywiZXhwIjoxNzIyMDY1NzAzfQ.eqhEp3kbx2KqqX0yB2wvPYGkQyJw0Kj1nyMz_w7bqQs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/quotations/pdf/669e0bf933bc75ad8a2396e1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"quotations",
+						"pdf",
+						"669e0bf933bc75ad8a2396e1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
