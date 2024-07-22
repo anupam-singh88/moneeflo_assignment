@@ -1,45 +1,45 @@
 const Quotation = require('../models/Quotation');
 const Product = require('../models/Product');
-const generatePDF = require('../utils/pdfGenerator');  // Import the generatePDF function
+const { generatePDF } = require('../utils/pdfGenerator');  // Import the generatePDF function
 
 exports.viewQuotations = async (req, res) => {
-    try {
-        const quotations = await Quotation.find({ user: req.user.id }).populate('products');
-        const formattedQuotations = quotations.map(quotation => ({
-            id: quotation._id,
-            date: quotation.date,
-            products: quotation.products.map(product => ({
-                name: product.name,
-                qty: product.qty,
-                rate: product.rate,
-                gst: product.gst,
-            })),
-            pdfUrl: `${req.protocol}://${req.get('host')}/api/quotations/pdf/${quotation._id}`
-        }));
-        res.json(formattedQuotations);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
+  try {
+    const quotations = await Quotation.find({ user: req.user.id }).populate('products');
+    const formattedQuotations = quotations.map(quotation => ({
+      id: quotation._id,
+      date: quotation.date,
+      products: quotation.products.map(product => ({
+        name: product.name,
+        qty: product.qty,
+        rate: product.rate,
+        gst: product.gst,
+      })),
+      pdfUrl: `${req.protocol}://${req.get('host')}/api/quotations/pdf/${quotation._id}`
+    }));
+    res.json(formattedQuotations);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 };
 
 exports.downloadPDF = async (req, res) => {
-    try {
-        const quotation = await Quotation.findById(req.params.id).populate('products');
-        if (!quotation) {
-            return res.status(404).json({ msg: 'Quotation not found' });
-        }
+  try {
+    const quotation = await Quotation.findById(req.params.id).populate('products');
+    if (!quotation) {
+      return res.status(404).json({ msg: 'Quotation not found' });
+    }
 
-        // Calculate total and GST
-        let total = 0;
-        quotation.products.forEach(product => {
-            total += product.qty * product.rate;
-        });
-        const gst = total * 0.18;
-        const grandTotal = total + gst;
+    // Calculate total and GST
+    let total = 0;
+    quotation.products.forEach(product => {
+      total += product.qty * product.rate;
+    });
+    const gst = total * 0.18;
+    const grandTotal = total + gst;
 
-        // Generate PDF
-        const html = `
+    // Generate PDF
+    const html = `
       <html>
         <head>
           <title>Quotation</title>
@@ -86,13 +86,13 @@ exports.downloadPDF = async (req, res) => {
       </html>
     `;
 
-        const pdf = await generatePDF(html);
+    const pdf = await generatePDF(html);
 
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=quotation_${req.params.id}.pdf`);
-        res.send(pdf);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=quotation_${req.params.id}.pdf`);
+    res.send(pdf);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 };
